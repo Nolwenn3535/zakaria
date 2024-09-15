@@ -1,0 +1,38 @@
+Dans un DOCKERFILE, mettre :
+# 1. Utilise une image de base avec Python 3.9
+FROM python:3.9-slim
+
+# 2. Définit le répertoire de travail à l'intérieur du container
+WORKDIR /app
+
+# 3. Copie le fichier requirements.txt dans le container
+COPY requirements.txt .
+
+# 4. Installe les dépendances Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Copie tout le code de l'application dans le container
+COPY . .
+
+# 6. Spécifie la commande par défaut qui sera exécutée
+CMD ["python", "app.py"]
+
+Commands docker:
+docker build --rm --tag ml-project:latest .
+docker rmi -f ml-project:latest
+docker run -it ml-project
+docker run -p 5000:5000 ml-project
+
+Commands Git : 
+echo "# DU_Ml_Ops" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/Jorissalmon/DU_Ml_Ops.git
+git push -u origin main
+
+Commands AWS :
+docker tag ml-projet:latest 326550329222.dkr.ecr.eu-north-1.amazonaws.com/mlprojet:latest
+
+

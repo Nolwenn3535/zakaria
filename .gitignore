@@ -1,0 +1,8 @@
+env/
+env
+Loan_Data.csv
+modele.py
+TP_MlOps_mlflow.ipynb
+app_monitoring.py
+logistic_regression_model.pkl
+*.pyc
