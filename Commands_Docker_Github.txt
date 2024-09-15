@@ -35,4 +35,6 @@ git push -u origin main
 Commands AWS :
 docker tag ml-projet:latest 326550329222.dkr.ecr.eu-north-1.amazonaws.com/mlprojet:latest
 
+test
+
 
