@@ -1,14 +1,14 @@
 from app import model_pred
 
-new_data = {'Age': 68,
-            'RestingBP': 150,
-            'Cholesterol': 195,
-            'Oldpeak': 0.0,
-            'FastingBS': 1,
-            'MaxHR': 132,
+new_data = {'credit_lines_outstanding': 0,
+            'loan_amt_outstanding': 5221.545193,
+            'total_debt_outstanding': 3915.471226,
+            'income': 78039.38546,
+            'years_employed': 5,
+            'fico_score': 605,
             }
 
 
 def test_predict():
     prediction = model_pred(new_data)
-    assert prediction == 1, "incorrect prediction"
+    assert prediction == 0, "incorrect prediction"
