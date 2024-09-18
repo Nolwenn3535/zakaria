@@ -6,9 +6,7 @@ from arize.pandas.logger import Client, Schema, Environments, ModelTypes
 import os
 from dotenv import load_dotenv
 
-# Configuration des logs
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -42,7 +40,6 @@ model = pickle.load(open("random_forest_model2.pkl", "rb"))
 def model_pred(features):
     test_data = pd.DataFrame([features])
     prediction = model.predict(test_data)
-    logger.info(f"Prediction made: {prediction[0]} for features: {features}")
     return int(prediction[0])
 
 # Fonction pour enregistrer les prédictions avec Arize
@@ -59,25 +56,20 @@ def log_prediction(features, prediction):
         "timestamp": pd.Timestamp.now()
     }])
 
-    try:
-        # Envoyer les données à Arize
-        response = arize_client.log(
-            dataframe=log_data,
-            schema=schema,
-            environment=Environments.PRODUCTION,  # Définir l'environnement à 'Production'
-            model_id="random_forest_model2",
-            model_type=ModelTypes.BINARY_CLASSIFICATION,
-            model_version="1.0",
-            validate=True
-        )
-        logger.info("Successfully logged data to Arize. Response:",response)
-    except Exception as e:
-        logger.error("Error logging data to Arize: ",e)
+    # Envoyer les données à Arize
+    response = arize_client.log(
+        dataframe=log_data,
+        schema=schema,
+        environment=Environments.PRODUCTION,  # Définir l'environnement à 'Production'
+        model_id="random_forest_model2",
+        model_type=ModelTypes.BINARY_CLASSIFICATION,
+        model_version="1.0",
+        validate=True
+    )
 
 # Page d'accueil
 @app.route("/", methods=["GET"])
 def Home():
-    logger.info("Home page accessed.")
     return render_template("index.html")
 
 # Route pour la prédiction
@@ -102,8 +94,6 @@ def predict():
             "fico_score": fico_score,
         }
 
-        logger.info("Received features: ",features)
-
         # Effectuer la prédiction
         prediction = model_pred(features)
 
@@ -113,18 +103,14 @@ def predict():
         else:
             prediction_text = "Le client n'est pas à risque de défaut de paiement."
 
-        logger.info("Prediction result : ",prediction_text)
-
         # Enregistrer la prédiction avec Arize
         log_prediction(features, prediction)
 
         # Renvoyer la page avec le résultat de la prédiction
         return render_template("index.html", prediction_text=prediction_text)
     else:
-        logger.info("Non-POST request made to /predict route.")
         return render_template("index.html")
 
 # Exécuter l'application Flask
 if __name__ == "__main__":
-    logger.info("Starting Flask app...")
     app.run(host="0.0.0.0", port=5000, debug=True)
