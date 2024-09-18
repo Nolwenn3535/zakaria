@@ -70,9 +70,9 @@ def log_prediction(features, prediction):
             model_version="1.0",
             validate=True
         )
-        logger.info(f"Successfully logged data to Arize. Response: {response}")
+        logger.info("Successfully logged data to Arize. Response:",response)
     except Exception as e:
-        logger.error(f"Error logging data to Arize: {e}")
+        logger.error("Error logging data to Arize: ",e)
 
 # Page d'accueil
 @app.route("/", methods=["GET"])
@@ -102,7 +102,7 @@ def predict():
             "fico_score": fico_score,
         }
 
-        logger.info(f"Received features: ",features)
+        logger.info("Received features: ",features)
 
         # Effectuer la prédiction
         prediction = model_pred(features)
@@ -113,7 +113,7 @@ def predict():
         else:
             prediction_text = "Le client n'est pas à risque de défaut de paiement."
 
-        logger.info(f"Prediction result : ",prediction_text)
+        logger.info("Prediction result : ",prediction_text)
 
         # Enregistrer la prédiction avec Arize
         log_prediction(features, prediction)
