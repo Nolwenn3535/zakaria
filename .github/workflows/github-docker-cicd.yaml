@@ -4,6 +4,8 @@ env:
   DOCKER_USER: ${{ secrets.DOCKER_USER }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   REPO_NAME: ${{ secrets.REPO_NAME }}
+  ARIZE_API_KEY: ${{ secrets.ARIZE_API_KEY }}
+  ARIZE_PROJECT_ID: ${{ secrets.ARIZE_PROJECT_ID }}
 
 on:
   push:
