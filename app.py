@@ -1,4 +1,3 @@
-import logging
 from flask import Flask, render_template, request
 import pickle
 import pandas as pd
@@ -57,7 +56,7 @@ def log_prediction(features, prediction):
     }])
 
     # Envoyer les données à Arize
-    response = arize_client.log(
+    arize_client.log(
         dataframe=log_data,
         schema=schema,
         environment=Environments.PRODUCTION,  # Définir l'environnement à 'Production'
