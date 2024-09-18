@@ -102,7 +102,7 @@ def predict():
             "fico_score": fico_score,
         }
 
-        logger.info(f"Received features: {features}")
+        logger.info(f"Received features: ",features)
 
         # Effectuer la prédiction
         prediction = model_pred(features)
@@ -113,7 +113,7 @@ def predict():
         else:
             prediction_text = "Le client n'est pas à risque de défaut de paiement."
 
-        logger.info(f"Prediction result: {prediction_text}")
+        logger.info(f"Prediction result : ",prediction_text)
 
         # Enregistrer la prédiction avec Arize
         log_prediction(features, prediction)
